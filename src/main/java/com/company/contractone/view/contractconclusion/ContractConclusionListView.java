@@ -1,4 +1,3 @@
-
 package com.company.contractone.view.contractconclusion;
 
 import com.company.contractone.entity.ContractConclusion;

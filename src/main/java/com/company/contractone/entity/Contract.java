@@ -1,4 +1,4 @@
-package com.company.contractshortdiag.entity;
+package com.company.contractone.entity;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.Comment;
@@ -8,15 +8,10 @@ import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
-@Table(name = "CTRACT_CONTRACT", indexes = {
-        @Index(name = "IDX_CTRACT_CONTRACT_ORDER", columnList = "ORDER_ID"),
-        @Index(name = "IDX_CTRACT_CONTRACT_ROOT_CONTRACT", columnList = "ROOT_CONTRACT_ID"),
-        @Index(name = "IDX_CTRACT_CONTRACT_PARENT_CONTRACT", columnList = "PARENT_CONTRACT_ID")
-})
+@Table(name = "CTRACT_CONTRACT")
 @Entity(name = "ctract_Contract")
 @Comment("Хранение данных о Договоре или ДопСоглашении")
 public class Contract {
@@ -26,15 +21,8 @@ public class Contract {
     @Column(name = "ID", nullable = false)
     private UUID id;
 
-    @JoinTable(name = "CSD_CONTRACT_CONTRACT_CONCLUSION_LINK",
-            joinColumns = @JoinColumn(name = "CONTRACT_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "CONTRACT_CONCLUSION_ID", referencedColumnName = "ID"))
-    @ManyToMany
-    private List<ContractConclusion> contractConclusions;
-
-    @JoinColumn(name = "ROOT_CONTRACT_ID")
-    @OneToOne(fetch = FetchType.LAZY)
-    private Contract rootContract;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "contract")
+    private ContractConclusion contractConclusion;
 
     @JoinColumn(name = "PARENT_CONTRACT_ID")
     @OneToOne(fetch = FetchType.LAZY)
@@ -50,6 +38,23 @@ public class Contract {
 
     @Column(name = "TYPE_")
     private String type;
+
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public ContractConclusion getContractConclusion() {
+        return contractConclusion;
+    }
+
+    public void setContractConclusion(ContractConclusion contractConclusion) {
+        this.contractConclusion = contractConclusion;
+    }
 
     public ContractType getType() {
         return type == null ? null : ContractType.fromId(type);
@@ -81,22 +86,6 @@ public class Contract {
 
     public void setParentContract(Contract parentContract) {
         this.parentContract = parentContract;
-    }
-
-    public Contract getRootContract() {
-        return rootContract;
-    }
-
-    public void setRootContract(Contract rootContract) {
-        this.rootContract = rootContract;
-    }
-
-    public void setContractConclusions(List<ContractConclusion> contractConclusions) {
-        this.contractConclusions = contractConclusions;
-    }
-
-    public List<ContractConclusion> getContractConclusions() {
-        return contractConclusions;
     }
 
 }

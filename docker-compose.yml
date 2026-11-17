@@ -2,10 +2,10 @@ version: "3.8"
 services:
   postgres:
     image: "postgres:18"
-    container_name: "erdiag"
+    container_name: "contract"
     ports:
       - 5432:5432
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=erdiagdb
+      - POSTGRES_DB=contractdb

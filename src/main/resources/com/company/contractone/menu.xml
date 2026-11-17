@@ -3,6 +3,9 @@
 
     <menu id="application" title="msg://com.company.contractone/menu.application.title" opened="true">
         <item view="con_User.list" title="msg://com.company.contractone.view.user/UserListView.title"/>
+        <item view="ctract_Contract.list" title="msg://com.company.contractone.view.contract/contractListView.title"/>
+        <item view="ctract_ContractConclusion.list"
+              title="msg://com.company.contractone.view.contractconclusion/contractConclusionListView.title"/>
     </menu>
 
 </menu-config>

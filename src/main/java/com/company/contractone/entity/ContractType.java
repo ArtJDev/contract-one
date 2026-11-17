@@ -1,4 +1,4 @@
-package com.company.contractshortdiag.entity;
+package com.company.contractone.entity;
 
 import io.jmix.core.metamodel.datatype.EnumClass;
 

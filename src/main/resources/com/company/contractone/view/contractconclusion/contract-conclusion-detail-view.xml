@@ -4,11 +4,19 @@
       focusComponent="form">
     <data>
         <instance id="contractConclusionDc"
-                    class="com.company.contractone.entity.ContractConclusion" > 
-            <fetchPlan   extends="_base"/>
-                    <loader id="contractConclusionDl"/>
+                  class="com.company.contractone.entity.ContractConclusion">
+            <fetchPlan extends="_base">
+                <property name="contract" fetchPlan="_base"/>
+                <property name="parentContractConclusion" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="contractConclusionDl"/>
         </instance>
-        
+        <instance id="contractDc" class="com.company.contractone.entity.Contract">
+            <loader id="contractDl"/>
+            <fetchPlan extends="_base">
+                <property name="contractConclusion" fetchPlan="_base"/>
+            </fetchPlan>
+        </instance>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -17,35 +25,19 @@
         <action id="saveCloseAction" type="detail_saveClose"/>
         <action id="closeAction" type="detail_close"/>
     </actions>
-    
     <layout>
-    
-        
-
-<formLayout id="form" dataContainer="contractConclusionDc">
-	<responsiveSteps>
-		<responsiveStep minWidth="0" columns="1"/>
-		<responsiveStep minWidth="40em" columns="2"/>
-	</responsiveSteps>
-	
-	
-		<textField id="nameField" property="name"/>
-	
-	
-	
-		<dateTimePicker id="createdDateField" property="createdDate"/>
-	
-	
-	
-		<select id="typeField" property="type"/>
-	
-	
-</formLayout>
-
-        
-        
+        <formLayout id="form" dataContainer="contractConclusionDc">
+            <responsiveSteps>
+                <responsiveStep minWidth="0" columns="1"/>
+                <responsiveStep minWidth="40em" columns="2"/>
+            </responsiveSteps>
+            <textField id="nameField" property="name"/>
+            <select id="typeField" property="type"/>
+            <comboBox id="base" property="contract" label="Основание (проект)"/>
+            <comboBox id="parent" property="parentContractConclusion" label="Родительский договор/ДС"
+                      dataContainer="contractConclusionDc"/>
+        </formLayout>
         <hbox id="detailActions">
-        
             <button id="saveAndCloseButton" action="saveCloseAction"/>
             <button id="closeButton" action="closeAction"/>
         </hbox>
